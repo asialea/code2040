@@ -29,13 +29,14 @@ public class Prefix {
 
 			URL url = new URL("http://challenge.code2040.org/api/prefix");
 			
+			//sending token and github to enpoint to get prefix
+			
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/json");
 
 			String input = "{\"token\":\"88fc2262fe28c7953f94fd2330f93b24\",\"github\":\"https://github.com/asialea/internship\"}";
-			System.out.println(input);
 
 			os = conn.getOutputStream();
 			os.write(input.getBytes());
@@ -44,20 +45,19 @@ public class Prefix {
 			br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
 			String output;
-			System.out.println("Output from server.... \n");
+			System.out.println("Server response 1: ");
 			while((output = br.readLine()) != null) {
 				System.out.println(output);
 			
+				System.out.println("");
 				
 				JSONObject jsonObj = new JSONObject(output);     //turn string into JSON object
 				JSONArray jsonArray = jsonObj.getJSONArray("array");  //array of all words
 				String prefix = jsonObj.getString("prefix");   //prefix
 				
 				
-				
-				JSONArray nArray = new JSONArray();; //arraylist of word with the prefix
-				
-				
+				//creates new json array of words without the prefix
+				JSONArray nArray = new JSONArray();
 				for(int i=0; i<jsonArray.length(); i++ ){
 					if(((String) jsonArray.get(i)).startsWith(prefix)== false)
 						nArray.put(jsonArray.get(i));
@@ -69,13 +69,13 @@ public class Prefix {
 
 				JSONObject post = new JSONObject();  //make a new json object
 				String token= "88fc2262fe28c7953f94fd2330f93b24" ;
-				post.put("token", token);    //add the array of words without the prefixes
-				post.put("array", nArray);   //add the token
+				post.put("token", token);    //add token
+				post.put("array", nArray);   //add jsonarray of words without prefix
 
 			
 
 	
-				String validate= post.toString();   //turn the Json object into a string
+				String validate= post.toString();   //turn the Json object into a string and send to server
 				
 				URL validateURL = new URL("http://challenge.code2040.org/api/prefix/validate");
 
@@ -91,7 +91,7 @@ public class Prefix {
 				br2 = new BufferedReader(new InputStreamReader((conn2.getInputStream())));
 
 				String new_output;
-				System.out.println("Output from server.... \n");
+				System.out.println("Server response 2: ");
 				while((new_output = br2.readLine()) != null) {
 					System.out.println(new_output);
 				}

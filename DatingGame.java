@@ -54,38 +54,41 @@ public class DatingGame {
 				
 				
 
-				JSONObject jsonObj = new JSONObject(output);     //turn string into JSON object
-				int interval = jsonObj.getInt("interval");  
-				String datestamp = jsonObj.getString("datestamp");
-				String date= datestamp.substring(0, 10);
+				JSONObject jsonObj = new JSONObject(output);     
+				int interval = jsonObj.getInt("interval");       //get interval from json
+				String datestamp = jsonObj.getString("datestamp");    //get the original date
+				String date= datestamp.substring(0, 10);            
 				String time= datestamp.substring(11,19);
-				String timestamp= date+ " " + time;
+				String timestamp= date+ " " + time; 				//put date into time into SimpleDateFormat
 				
-				SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+				SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");   //parse and create date
 				Date originaldate= sdf.parse(timestamp);
 				
 				
 				
-				 Calendar cal = Calendar.getInstance();
+				 Calendar cal = Calendar.getInstance();            //create calendar instance and set the time to given date
 				  cal.setTime(originaldate);
-				  cal.add(Calendar.SECOND, interval);
+				  cal.add(Calendar.SECOND, interval);          //adds the given interval in seconds to the date
 				
 				
-	     String year= 	String.format("%04d",cal.getWeekYear());
+		 //extract date and time from calendar object	
+				  
+	     String year= 	String.format("%04d",cal.getWeekYear());         
 		 String month = String.format("%02d",cal.get(Calendar.MONTH) +1);
 		 String hours = String.format("%02d",cal.get(Calendar.HOUR_OF_DAY));
 		 String minutes = String.format("%02d",cal.get(Calendar.MINUTE));
 		 String seconds = String.format("%02d",cal.get(Calendar.SECOND));
 		 String day= String.format("%02d",cal.get(Calendar.DAY_OF_MONTH));
 		 
-			
+		//put the date and time into proper format 
+		 
 		String newDatestamp = year+ "-" + month + "-" + day  + "T" + hours + ":" + minutes + ":" + seconds + "Z"; 		
 		System.out.println(newDatestamp);
 		
 
-		String validate = "{\"token\":\"88fc2262fe28c7953f94fd2330f93b24\",\"datestamp\":\"" + newDatestamp + "\"}";
+		//Send result to the server
 		
-		
+		String validate = "{\"token\":\"88fc2262fe28c7953f94fd2330f93b24\",\"datestamp\":\"" + newDatestamp + "\"}";		
 
 		URL validateURL = new URL("http://challenge.code2040.org/api/dating/validate");
 

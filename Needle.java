@@ -40,7 +40,7 @@ public class Needle {
 			conn.setRequestProperty("Content-Type", "application/json");
 
 			String input = "{\"token\":\"88fc2262fe28c7953f94fd2330f93b24\",\"github\":\"https://github.com/asialea/internship\"}";
-			System.out.println(input);
+			
 
 			os = conn.getOutputStream();
 			os.write(input.getBytes());
@@ -49,18 +49,19 @@ public class Needle {
 			br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
 			String output;
-			System.out.println("Output from server.... \n");
+			System.out.println("Server response 1: ");
 			while((output = br.readLine()) != null) {
-				System.out.println(output);
-			String haystack = output.substring(32);
-			//System.out.print(haystack);
+				System.out.println(output);		
+			 
+				System.out.println("");
 				
-				JSONObject jsonObj = new JSONObject(output);	
-				String needle = jsonObj.getString("needle");
-				//System.out.println(needle);
+			//change output from string to JSON and extract array and needle
 				
-				JSONArray array= new JSONArray(haystack);
-				
+			JSONObject jsonObj = new JSONObject(output);	
+			String needle = jsonObj.getString("needle");
+			JSONArray array=  jsonObj.getJSONArray("haystack");
+		
+			//go through and find index
 				for(int i=0; i<array.length(); i++ ){
 					if(needle.equals(array.get(i)))
 						index=i;
@@ -68,11 +69,9 @@ public class Needle {
 				}
 				       
 		
-				
+				//send index to  and token to validation endpoint
 
 				String validate = "{\"token\":\"88fc2262fe28c7953f94fd2330f93b24\",\"needle\":\"" + index + "\"}";
-				
-				
 
 				URL validateURL = new URL("http://challenge.code2040.org/api/haystack/validate");
 
@@ -88,7 +87,7 @@ public class Needle {
 				br2 = new BufferedReader(new InputStreamReader((conn2.getInputStream())));
 
 				String new_output;
-				System.out.println("Output from server.... \n");
+				System.out.println("Server response 2: ");
 				while((new_output = br2.readLine()) != null) {
 					System.out.println(new_output);
 				}

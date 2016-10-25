@@ -19,8 +19,11 @@ public class Registration {
 			BufferedReader br;
 
 			try {
+				
+				//sends token and github to Registration endpoint
 
 				URL url = new URL("http://challenge.code2040.org/api/register");
+				
 				
 				conn = (HttpURLConnection) url.openConnection();
 				conn.setDoOutput(true);
@@ -28,7 +31,8 @@ public class Registration {
 				conn.setRequestProperty("Content-Type", "application/json");
 
 				String input = "{\"token\":\"88fc2262fe28c7953f94fd2330f93b24\",\"github\":\"https://github.com/asialea/internship\"}";
-				System.out.println(input);
+
+				
 
 				os = conn.getOutputStream();
 				os.write(input.getBytes());
@@ -37,7 +41,7 @@ public class Registration {
 				br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
 				String output;
-				System.out.println("Output from server.... \n");
+				System.out.println("Server response:");
 				while((output = br.readLine()) != null) {
 					System.out.println(output);
 				}
