@@ -51,7 +51,7 @@ public class Reverse {
 				
 
 				String reverse = new StringBuffer(output).reverse().toString(); // creating String buffer and reversing the output
-				System.out.println("The reversed String is: " + reverse);                 //print the reversed string to make sure it worked properly
+				System.out.println("The reversed String is: " + reverse);          //print the reversed string to make sure it worked 
 				 
 				String validate = "{\"token\":\"88fc2262fe28c7953f94fd2330f93b24\",\"string\":\"" + reverse + "\"}"; 
 				
