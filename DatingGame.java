@@ -73,7 +73,7 @@ public class DatingGame {
 				
 		 //extract date and time from calendar object	
 				  
-	     String year= 	String.format("%04d",cal.getWeekYear());         
+	         String year= String.format("%04d",cal.getWeekYear());         
 		 String month = String.format("%02d",cal.get(Calendar.MONTH) +1);
 		 String hours = String.format("%02d",cal.get(Calendar.HOUR_OF_DAY));
 		 String minutes = String.format("%02d",cal.get(Calendar.MINUTE));
